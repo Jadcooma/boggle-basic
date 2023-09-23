@@ -1,3 +1,57 @@
 body {
   font-family: sans-serif;
+  background-color: #ffff66;
+  text-align: center;
+  width: 100vw;
+  margin: 0px;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.container {
+  display: grid;
+  font-size: 2.5rem;
+  width: fit-content;
+  aspect-ratio: 1 / 1;
+  margin: auto;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.1em;
+}
+
+.container>div {
+  height: 1.15em;
+  aspect-ratio: 1 / 1;
+  border: 2px black solid;
+  border-radius: 1rem;
+  background-color: white;
+}
+
+button {
+  font-size: 1.5rem;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 25px;
+  margin-top: 2rem;
+  background-color: #0066ff;
+}
+
+button:hover {
+  background-color: #3385ff;
+}
+
+button:active {
+  background-color: #0066ff;
+}
+
+@media (min-width: 75rem) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  .container {
+    font-size: 3rem;
+  }
 }
