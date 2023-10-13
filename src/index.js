@@ -1,20 +1,64 @@
 // Import assertion to prevent importing malicious scripts by checking the MIME type 
 import dice from './data/dice';
 
-var playing = false;
-updateGameUI();
+const gameDuration = 1000 * 60 * 3 // milliseconds in 3 minutes
+
+const state = Object.freeze({
+  NONE: 0,
+  ACTIVE: 1,
+  PAUSED: 2,
+  OVER: 3,
+});
+
+let gameState;
+let timerIntervalID;
+let timeRemaining;
+
+function init() {
+  gameState = state.NONE;
+  timeRemaining = gameDuration;
+  updateTimerDisplay();
+  updateGameUI();
+}
 
 function updateGameUI() {
-  const gameToggle = document.querySelector('button[data-role="game-toggle"]');
+  const gameToggle = document.querySelector('[data-role="game-toggle"]');
   const gameContainer = document.querySelector('div.container');
+  const timerToggle = document.querySelector('[data-role="timer-toggle"]');
+  const timerDisplay = document.querySelector('[data-role="timer-display"]');
 
-  gameToggle.textContent = (playing) ? 'STOP' : 'PLAY';
-  gameContainer.style.display = (playing) ? 'grid' : 'none';
+  switch (gameState) {
+    case state.NONE:
+      gameContainer.style.display = 'none';
+      timerToggle.style.display = 'none';
+      timerDisplay.style.display = 'none';
+      gameToggle.textContent = 'NEW GAME';
+      break;  
+    case state.ACTIVE:
+      gameContainer.style.display = 'grid';
+      timerToggle.style.display = 'inline';
+      timerDisplay.style.display = 'block';
+      gameToggle.textContent = 'STOP';
+      timerToggle.textContent = 'PAUSE';
+      timerDisplay.classList.remove('done');
+      break;
+    case state.PAUSED:
+      gameContainer.style.display = 'none';
+      timerToggle.textContent = 'CONTINUE';
+      break;
+    case state.OVER:
+      gameContainer.style.display = 'none';
+      timerToggle.style.display = 'none';
+      gameToggle.textContent = 'NEW GAME';
+      timerDisplay.classList.add('done');
+  }
 }
 
 function newGame() {
-  if (playing) return;
-  playing = true;
+  gameState = state.ACTIVE;
+  timeRemaining = gameDuration;
+
+  startTimer();
 
   // Returns a random number between min (included) and max (excluded)
   const integerBetween = (min, max) => Math.floor((max - min) * Math.random() + min);
@@ -39,23 +83,95 @@ function newGame() {
     newDie.innerText = die;
     gameContainer.appendChild(newDie);
   }
+
+  updateGameUI();
+  updateTimerDisplay();
 }
 
 function stopGame() {
-  if (!playing) return;
-  playing = false;
+  gameState = state.NONE;
+  stopTimer();
 
-  // Remove dice from previous game
+  removeDice();
+  updateGameUI();
+}
+
+function removeDice() {
   document.querySelectorAll('div.container>div').forEach(oldDie => oldDie.remove());
 }
 
 function toggleGame() {
-  if (playing) stopGame();
-  else newGame();
+  switch (gameState) {
+    case state.ACTIVE:
+    case state.PAUSED: 
+      stopGame(); break;
+    case state.NONE:
+    case state.OVER: 
+      newGame();
+  }
 
   updateGameUI();
 }
 
-// Add click listener to the game toggle to play or stop the game
-document.querySelector('button[data-role="game-toggle"]')
+function toggleTimer() {
+  if (gameState == state.ACTIVE) {
+    gameState = state.PAUSED;
+    stopTimer();
+  } else if (gameState == state.PAUSED) {
+    gameState = state.ACTIVE;
+    startTimer();
+  }
+
+  updateGameUI();
+}
+
+function startTimer() {
+  timerIntervalID = setInterval(runTimer, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerIntervalID);
+}
+
+function runTimer() {
+  if (timeRemaining == 0) {
+    gameOver();
+  } else {
+    timeRemaining -= 1000;
+  }
+
+  updateTimerDisplay();
+}
+
+function gameOver() {
+  gameState = state.OVER;
+  stopTimer();
+  removeDice();
+  updateGameUI();
+}
+
+function updateTimerDisplay() {
+  const secondsRemaining = timeRemaining / 1000;
+  const minutes = Math.floor(secondsRemaining / 60);
+  const seconds = (minutes > 0) 
+    ? secondsRemaining % (minutes * 60)
+    : secondsRemaining;
+  
+  const minutesField = document.querySelector('[data-role="minutes"]');
+  const secondsField = document.querySelector('[data-role="seconds"]');
+
+  // Add a leading zero if field contains single digit
+  minutesField.textContent = (minutes < 10) ? `0${minutes}` : minutes;
+  secondsField.textContent = (seconds < 10) ? `0${seconds}` : seconds;
+}
+
+// Pressing the game toggle starts or stops the game
+document.body.querySelector('[data-role="game-toggle"]')
   .addEventListener('click', toggleGame);
+
+// Pressing the timer toggle pauses or resumes the game
+document.body.querySelector('[data-role="timer-toggle"]')
+  .addEventListener('click', toggleTimer);
+
+// Initialize the page when loaded
+document.body.onload = () => init();
