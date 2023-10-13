@@ -147,7 +147,15 @@ function gameOver() {
   gameState = state.OVER;
   stopTimer();
   removeDice();
+  playAlarm();
   updateGameUI();
+}
+
+function playAlarm() {
+  const alarm = document.querySelector('[data-role="alarm"]');
+  if (!(alarm instanceof HTMLAudioElement)) return;
+  
+  alarm.play();
 }
 
 function updateTimerDisplay() {
