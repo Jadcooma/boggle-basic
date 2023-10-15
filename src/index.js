@@ -33,6 +33,7 @@ function updateGameUI() {
       timerToggle.style.display = 'none';
       timerDisplay.style.display = 'none';
       gameToggle.textContent = 'NEW GAME';
+      removeDice();
       break;  
     case state.ACTIVE:
       gameContainer.style.display = 'grid';
@@ -51,6 +52,7 @@ function updateGameUI() {
       timerToggle.style.display = 'none';
       gameToggle.textContent = 'NEW GAME';
       timerDisplay.classList.add('done');
+      removeDice();
   }
 }
 
@@ -63,10 +65,8 @@ function newGame() {
   // Returns a random number between min (included) and max (excluded)
   const integerBetween = (min, max) => Math.floor((max - min) * Math.random() + min);
 
-  // Roll all dice
-  const rolledDice = dice.map(die => die[integerBetween(0, 6)]);
-
   // Shuffle all rolled dice
+  const rolledDice = dice.map(die => die[integerBetween(0, 6)]);
   const shuffledDice = [];
 
   while (rolledDice.length > 0) {
@@ -86,13 +86,12 @@ function newGame() {
 
   updateGameUI();
   updateTimerDisplay();
+  playDiceSound();
 }
 
 function stopGame() {
   gameState = state.NONE;
   stopTimer();
-
-  removeDice();
   updateGameUI();
 }
 
@@ -146,16 +145,22 @@ function runTimer() {
 function gameOver() {
   gameState = state.OVER;
   stopTimer();
-  removeDice();
   playAlarm();
   updateGameUI();
 }
 
 function playAlarm() {
-  const alarm = document.querySelector('[data-role="alarm"]');
+  const alarm = document.querySelector('[data-role="alarm-sound"]');
   if (!(alarm instanceof HTMLAudioElement)) return;
   
   alarm.play();
+}
+
+function playDiceSound() {
+  const diceSound = document.querySelector('[data-role="dice-sound"]');
+  if (!(diceSound instanceof HTMLAudioElement)) return;
+  
+  diceSound.play();
 }
 
 function updateTimerDisplay() {
