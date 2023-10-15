@@ -1,20 +1,32 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  position: fixed;
   margin: 0px;
   font-family: sans-serif;
-  background-color: #ffff66;
   text-align: center;
+  background: url("./data/brown-wooden-board.jpg");
 }
 
 h1 {
+  width: fit-content;
+  padding: 0 .5rem .5rem .5rem;
+  margin: 1rem auto 1rem;
+  border-radius: 1rem;
   font-size: 3rem;
+  background: lightgoldenrodyellow;
 }
 
 .container {
   width: fit-content;
   font-size: 2.5rem;
   aspect-ratio: 1 / 1;
-  margin: auto;
+  margin: 2rem auto 0;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.1em;
 }
@@ -24,7 +36,7 @@ h1 {
   aspect-ratio: 1 / 1;
   border: 2px black solid;
   border-radius: 1rem;
-  background-color: white;
+  background: white;
 }
 
 button {
@@ -34,23 +46,25 @@ button {
   border: none;
   border-radius: 25px;
   margin-top: 2rem;
-  background-color: #0066ff;
+  background: #0066ff;
 }
 
 button:hover {
-  background-color: #3385ff;
+  background: #3385ff;
 }
 
 button:active {
-  background-color: #0066ff;
+  background: #0066ff;
 }
 
 .timer {
-  display: none;
   width: fit-content;
-  padding: 1rem 2rem 2rem 2rem;
-  margin: 1rem auto;
+  margin: 2rem auto 1rem;
   font-size: 2rem;
+  background: lightgoldenrodyellow;
+  display: none;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
 }
 
 .timer.done {
