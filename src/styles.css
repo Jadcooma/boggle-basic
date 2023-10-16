@@ -1,3 +1,9 @@
+:root {
+  --btn-color: #0277BD;
+  --active-btn-color: #0288D1;
+  --headerContrast: lightgoldenrodyellow;
+}
+
 html {
   height: 100%;
   width: 100%;
@@ -15,11 +21,11 @@ body {
 
 h1 {
   width: fit-content;
-  padding: 0 .5rem .5rem .5rem;
+  padding: .5rem;
   margin: 1rem auto 1rem;
   border-radius: 1rem;
   font-size: 3rem;
-  background: lightgoldenrodyellow;
+  background: var(--headerContrast);
 }
 
 .container {
@@ -46,22 +52,23 @@ button {
   border: none;
   border-radius: 25px;
   margin-top: 2rem;
-  background: #0066ff;
 }
 
-button:hover {
-  background: #3385ff;
+button {
+  background: var(--btn-color);
 }
 
-button:active {
-  background: #0066ff;
+@media (hover: hover) {
+  button:hover {
+    background: var(--active-btn-color);
+  }
 }
 
 .timer {
   width: fit-content;
   margin: 2rem auto 1rem;
   font-size: 2rem;
-  background: lightgoldenrodyellow;
+  background: var(--headerContrast);
   display: none;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
