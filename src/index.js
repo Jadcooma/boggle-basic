@@ -1,7 +1,7 @@
-// Import assertion to prevent importing malicious scripts by checking the MIME type 
+// Import assertion to prevent importing malicious scripts by checking the MIME type
 import dice from './data/dice';
 
-const gameDuration = 1000 * 60 * 3 // milliseconds in 3 minutes
+const gameDuration = 1000 * 60 * 3; // milliseconds in 3 minutes
 
 const state = Object.freeze({
   NONE: 0,
@@ -34,7 +34,7 @@ function updateGameUI() {
       timerDisplay.style.display = 'none';
       gameToggle.textContent = 'NEW GAME';
       removeDice();
-      break;  
+      break;
     case state.ACTIVE:
       gameContainer.style.display = 'grid';
       timerToggle.style.display = 'inline';
@@ -63,10 +63,11 @@ function newGame() {
   startTimer();
 
   // Returns a random number between min (included) and max (excluded)
-  const integerBetween = (min, max) => Math.floor((max - min) * Math.random() + min);
+  const integerBetween = (min, max) =>
+    Math.floor((max - min) * Math.random() + min);
 
   // Shuffle all rolled dice
-  const rolledDice = dice.map(die => die[integerBetween(0, 6)]);
+  const rolledDice = dice.map((die) => die[integerBetween(0, 6)]);
   const shuffledDice = [];
 
   while (rolledDice.length > 0) {
@@ -96,16 +97,19 @@ function stopGame() {
 }
 
 function removeDice() {
-  document.querySelectorAll('div.container>div').forEach(oldDie => oldDie.remove());
+  document
+    .querySelectorAll('div.container>div')
+    .forEach((oldDie) => oldDie.remove());
 }
 
 function toggleGame() {
   switch (gameState) {
     case state.ACTIVE:
-    case state.PAUSED: 
-      stopGame(); break;
+    case state.PAUSED:
+      stopGame();
+      break;
     case state.NONE:
-    case state.OVER: 
+    case state.OVER:
       newGame();
   }
 
@@ -152,38 +156,39 @@ function gameOver() {
 function playAlarm() {
   const alarm = document.querySelector('[data-role="alarm-sound"]');
   if (!(alarm instanceof HTMLAudioElement)) return;
-  
+
   alarm.play();
 }
 
 function playDiceSound() {
   const diceSound = document.querySelector('[data-role="dice-sound"]');
   if (!(diceSound instanceof HTMLAudioElement)) return;
-  
+
   diceSound.play();
 }
 
 function updateTimerDisplay() {
   const secondsRemaining = timeRemaining / 1000;
   const minutes = Math.floor(secondsRemaining / 60);
-  const seconds = (minutes > 0) 
-    ? secondsRemaining % (minutes * 60)
-    : secondsRemaining;
-  
+  const seconds =
+    minutes > 0 ? secondsRemaining % (minutes * 60) : secondsRemaining;
+
   const minutesField = document.querySelector('[data-role="minutes"]');
   const secondsField = document.querySelector('[data-role="seconds"]');
 
   // Add a leading zero if field contains single digit
-  minutesField.textContent = (minutes < 10) ? `0${minutes}` : minutes;
-  secondsField.textContent = (seconds < 10) ? `0${seconds}` : seconds;
+  minutesField.textContent = minutes < 10 ? `0${minutes}` : minutes;
+  secondsField.textContent = seconds < 10 ? `0${seconds}` : seconds;
 }
 
 // Pressing the game toggle starts or stops the game
-document.body.querySelector('[data-role="game-toggle"]')
+document.body
+  .querySelector('[data-role="game-toggle"]')
   .addEventListener('click', toggleGame);
 
 // Pressing the timer toggle pauses or resumes the game
-document.body.querySelector('[data-role="timer-toggle"]')
+document.body
+  .querySelector('[data-role="timer-toggle"]')
   .addEventListener('click', toggleTimer);
 
 // Initialize the page when loaded

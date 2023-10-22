@@ -1,6 +1,6 @@
 :root {
-  --btn-color: #0277BD;
-  --active-btn-color: #0288D1;
+  --btn-color: #0277bd;
+  --active-btn-color: #0288d1;
   --headerContrast: lightgoldenrodyellow;
 }
 
@@ -16,16 +16,21 @@ body {
   margin: 0px;
   font-family: sans-serif;
   text-align: center;
-  background: url("./data/brown-wooden-board.webp");
+  background: url('./data/brown-wooden-board.webp');
 }
 
 h1 {
   width: fit-content;
-  padding: .5rem;
+  padding: 0.5rem;
   margin: 1rem auto 1rem;
   border-radius: 1rem;
   font-size: 3rem;
   background: var(--headerContrast);
+}
+
+.icon {
+  height: 3rem;
+  background: url(favicon.svg);
 }
 
 .container {
@@ -37,7 +42,7 @@ h1 {
   gap: 0.1em;
 }
 
-.container>div {
+.container > div {
   height: 1.15em;
   aspect-ratio: 1 / 1;
   border: 2px black solid;

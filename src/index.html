@@ -1,23 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
     <script type="module" src="index.js"></script>
     <title>Boggle</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>🎲 Boggle 🎲</h1>
-    <h2 class="timer" data-role="timer-display"><span data-role="minutes"></span>:<span data-role="seconds"></span></h2>
+    <h2 class="timer" data-role="timer-display">
+      <span data-role="minutes"></span>:<span data-role="seconds"></span>
+    </h2>
     <div class="container"></div>
     <button data-role="game-toggle"></button>
     <button data-role="timer-toggle"></button>
     <audio data-role="alarm-sound" src="./data/alarm.mp3"></audio>
-    <audio data-role="dice-sound" src="./data/dice-rolling-on-table.wav"></audio>
-</body>
-
+    <audio
+      data-role="dice-sound"
+      src="./data/dice-rolling-on-table.wav"
+    ></audio>
+  </body>
 </html>
