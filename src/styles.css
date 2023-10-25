@@ -18,7 +18,7 @@ body {
   margin: 0px;
   font-family: sans-serif;
   text-align: center;
-  background: url('./data/brown-wooden-board.webp');
+  background: url('./data/brown-wooden-board-small.webp');
 }
 
 h1 {
@@ -91,7 +91,11 @@ button {
   }
 }
 
-@media (min-width: 75rem) {
+@media (min-width: 425px) {
+  body {
+    background: url('./data/brown-wooden-board.webp');
+  }
+
   h1 {
     font-size: var(--headerFontSizeWideScreen);
   }
