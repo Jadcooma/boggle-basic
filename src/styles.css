@@ -2,6 +2,8 @@
   --btn-color: #0277bd;
   --active-btn-color: #0288d1;
   --headerContrast: lightgoldenrodyellow;
+  --headerFontSize: 3rem;
+  --headerFontSizeWideScreen: 4rem;
 }
 
 html {
@@ -24,13 +26,13 @@ h1 {
   padding: 0.5rem;
   margin: 1rem auto 1rem;
   border-radius: 1rem;
-  font-size: 3rem;
+  font-size: var(--headerFontSize);
   background: var(--headerContrast);
 }
 
 .icon {
-  height: 3rem;
-  background: url(favicon.svg);
+  height: var(--headerFontSize);
+  vertical-align: middle;
 }
 
 .container {
@@ -91,11 +93,15 @@ button {
 
 @media (min-width: 75rem) {
   h1 {
-    font-size: 4rem;
+    font-size: var(--headerFontSizeWideScreen);
+  }
+
+  .icon {
+    height: var(--headerFontSizeWideScreen);
   }
 
   .container {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   button {
