@@ -48,15 +48,14 @@ function updateGameUI() {
       timerToggle.textContent = 'CONTINUE';
       break;
     case state.OVER:
-      gameContainer.style.display = 'none';
       timerToggle.style.display = 'none';
       gameToggle.textContent = 'NEW GAME';
       timerDisplay.classList.add('done');
-      removeDice();
   }
 }
 
 function newGame() {
+  removeDice();
   gameState = state.ACTIVE;
   timeRemaining = gameDuration;
 
@@ -192,4 +191,4 @@ document.body
   .addEventListener('click', toggleTimer);
 
 // Initialize the page when loaded
-document.body.onload = () => init();
+document.body.onload = init;
